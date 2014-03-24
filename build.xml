@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="Scalaris Java Interface" default="jar" basedir=".">
+  <path id="test.classpath">
+    <pathelement path="classes" />
+    <path>
+      <fileset dir="test-lib" includes="*.jar"/>
+    </path>
+  </path>
+
+  <target name='clean' description="Deletes all generated files.">
+    <delete dir="classes" />
+  </target>
+  
+  <target name="compile">
+    <mkdir dir="classes" />
+    <javac encoding="UTF-8" srcdir='test' destdir='classes' classpathref="test.classpath" includes="de/zib/tools/*.java" debug="true" includeantruntime="false" />
+  </target>
+  
+  <target name="test" depends="compile" description="Run unit tests">
+    <junit dir="classes" printsummary="true" haltonfailure="true" fork="yes" >
+      <formatter type="brief" usefile="false" />
+      <classpath refid="test.classpath" />
+      <batchtest>
+        <fileset dir="classes" includes="de/zib/tools**/*Test.class" />
+      </batchtest>
+    </junit>
+  </target>
+</project>
